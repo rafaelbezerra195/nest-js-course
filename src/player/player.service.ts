@@ -1,7 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PlayerDto } from './dto/create-player.dto';
 import { Player } from './interfaces/player.interface';
 import { v4 as uuidv4 } from 'uuid';
+import * as _ from 'lodash';
 
 @Injectable()
 export class PlayerService {
@@ -44,7 +45,16 @@ export class PlayerService {
     });
   }
 
-  getPlayers(): Player[] {
-    return this.playerList;
+  getPlayers(email?: string): Player[] {
+    if (_.isNil(email)) return this.playerList;
+
+    const returnedList = this.playerList.filter((player) => {
+      return player.email === email;
+    });
+
+    if (returnedList.length === 0)
+      throw new NotFoundException('Player not found.');
+
+    return returnedList;
   }
 }
