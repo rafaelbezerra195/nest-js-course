@@ -57,4 +57,8 @@ export class PlayerService {
 
     return returnedList;
   }
+
+  delete(email: string) {
+    this.playerList = this.playerList.filter((player) => player.email != email);
+  }
 }
