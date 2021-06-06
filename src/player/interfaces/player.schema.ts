@@ -5,9 +5,9 @@ export type PlayerDocument = Player & Document;
 @Schema({ timestamps: true, collection: 'Player' })
 export class Player {
   @Prop({ unique: true })
-  phoneNumber: string;
-  @Prop({ unique: true })
   email: string;
+  @Prop()
+  phoneNumber: string;
   @Prop()
   nome: string;
   @Prop()

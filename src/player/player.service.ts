@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PlayerDto } from './dto/create-player.dto';
 import { Player } from './interfaces/player.interface';
 import * as _ from 'lodash';
@@ -11,35 +11,28 @@ export class PlayerService {
     @InjectModel('Player') private readonly playerModel: Model<Player>,
   ) {}
 
-  public async createPlayer(player: PlayerDto) {
-    const foundPlayer = await this.playerModel
-      .findOne({ email: player.email })
+  public async createPlayer(newPlayer: PlayerDto): Promise<void> {
+    const player = await this.playerModel
+      .findOne({ email: newPlayer.email })
       .exec();
+    if (!_.isNil(player))
+      throw new BadRequestException('Player already exists.');
 
-    if (_.isNil(foundPlayer)) {
-      await this.create(player);
-      return;
-    }
-
-    await this.update(player);
-  }
-
-  private async create(newPlayer: PlayerDto): Promise<Player> {
     const createdPlayer = new this.playerModel(newPlayer);
-    return await createdPlayer.save();
+    await createdPlayer.save();
   }
 
-  private async update(player: PlayerDto): Promise<Player> {
+  public async updatePlayer(email: string, player: PlayerDto): Promise<Player> {
     return await this.playerModel
-      .findOneAndUpdate({ email: player.email }, { $set: player })
+      .findOneAndUpdate({ email }, { $set: player })
       .exec();
   }
 
   public async getPlayer(email: string): Promise<Player> {
-    const returnedList = await this.playerModel.findOne({ email }).exec();
-    if (_.isNil(returnedList)) throw new NotFoundException('Player not found.');
+    const player = await this.playerModel.findOne({ email }).exec();
+    if (_.isNil(player)) throw new NotFoundException('Player not found.');
 
-    return returnedList;
+    return player;
   }
 
   public async getPlayers(): Promise<Player[]> {
