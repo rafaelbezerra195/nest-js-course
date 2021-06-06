@@ -3,7 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PlayerDto } from './dto/create-player.dto';
+import { CreatePlayerDto } from './dto/create-player.dto';
+import { UpdatePlayerDto } from './dto/update-player.dto';
 import { Player } from './interfaces/player.interface';
 import * as _ from 'lodash';
 import { Model } from 'mongoose';
@@ -15,7 +16,7 @@ export class PlayerService {
     @InjectModel('Player') private readonly playerModel: Model<Player>,
   ) {}
 
-  public async createPlayer(newPlayer: PlayerDto): Promise<Player> {
+  public async createPlayer(newPlayer: CreatePlayerDto): Promise<Player> {
     const player = await this.playerModel
       .findOne({ email: newPlayer.email })
       .exec();
@@ -26,7 +27,10 @@ export class PlayerService {
     return createdPlayer.save();
   }
 
-  public async updatePlayer(_id: string, player: PlayerDto): Promise<Player> {
+  public async updatePlayer(
+    _id: string,
+    player: UpdatePlayerDto,
+  ): Promise<Player> {
     return await this.playerModel
       .findOneAndUpdate({ _id }, { $set: player })
       .exec();
