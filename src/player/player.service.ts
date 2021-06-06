@@ -47,6 +47,6 @@ export class PlayerService {
   }
 
   public async delete(email: string): Promise<any> {
-    await this.playerModel.remove({ email });
+    await this.playerModel.deleteOne({ email });
   }
 }

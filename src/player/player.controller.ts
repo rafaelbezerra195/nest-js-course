@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { PlayerDto } from './dto/create-player.dto';
 import { Player } from './interfaces/player.interface';
+import { PlayerParamValitadionPipe } from './pipes/player-param-validation.pipe';
 import { PlayerService } from './player.service';
 
 @Controller('player')
@@ -28,7 +29,9 @@ export class PlayerController {
   }
 
   @Delete()
-  async playerDelete(@Query('email') email: string): Promise<void> {
+  async playerDelete(
+    @Query('email', PlayerParamValitadionPipe) email: string,
+  ): Promise<void> {
     await this.playerService.delete(email);
   }
 }
