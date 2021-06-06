@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 
 export class PlayerParamValitadionPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
-    if (_.isEmpty(value))
+    if (_.isEmpty(_.trim(value)))
       throw new BadRequestException(
         `parameter ${metadata.data} should not be empty`,
       );

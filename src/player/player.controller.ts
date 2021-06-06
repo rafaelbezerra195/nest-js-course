@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Query,
   UsePipes,
@@ -23,9 +24,16 @@ export class PlayerController {
     await this.playerService.createPlayer(newPlayer);
   }
 
+  @Get('/:_id')
+  async playerGet(
+    @Param('_id', PlayerParamValitadionPipe) _id: string,
+  ): Promise<Player> {
+    return await this.playerService.getPlayer(_id);
+  }
+
   @Get()
-  async playerGet(@Query('email') email: string): Promise<Player[]> {
-    return await this.playerService.getPlayers(email);
+  async playerGetAll(): Promise<Player[]> {
+    return await this.playerService.getPlayers();
   }
 
   @Delete()

@@ -35,15 +35,15 @@ export class PlayerService {
       .exec();
   }
 
-  public async getPlayers(email?: string): Promise<Player[]> {
-    if (_.isNil(email)) return await this.playerModel.find().exec();
-
-    const returnedList = await this.playerModel.find({ email }).exec();
-
-    if (returnedList.length == 0)
-      throw new NotFoundException('Player not found.');
+  public async getPlayer(email: string): Promise<Player> {
+    const returnedList = await this.playerModel.findOne({ email }).exec();
+    if (_.isNil(returnedList)) throw new NotFoundException('Player not found.');
 
     return returnedList;
+  }
+
+  public async getPlayers(): Promise<Player[]> {
+    return await this.playerModel.find().exec();
   }
 
   public async delete(email: string): Promise<any> {
