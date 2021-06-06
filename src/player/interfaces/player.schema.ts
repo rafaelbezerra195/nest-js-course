@@ -1,16 +1,21 @@
-import * as mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export const PlayerSchema = new mongoose.Schema(
-  {
-    phoneNumber: { type: String, unique: true },
-    email: { type: String, unique: true },
-    nome: String,
-    ranking: String,
-    rankingPosition: Number,
-    urlPhoto: String,
-  },
-  {
-    timestamps: true,
-    collection: 'player',
-  },
-);
+export type PlayerDocument = Player & Document;
+@Schema({ timestamps: true, collection: 'Player' })
+export class Player {
+  @Prop({ unique: true })
+  phoneNumber: string;
+  @Prop({ unique: true })
+  email: string;
+  @Prop()
+  nome: string;
+  @Prop()
+  ranking: string;
+  @Prop()
+  rankingPosition: string;
+  @Prop()
+  urlPhoto: string;
+}
+
+export const PlayerSchema = SchemaFactory.createForClass(Player);
