@@ -6,7 +6,12 @@ import { PlayerModule } from './player/player.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGOOSE_URI),
+    MongooseModule.forRoot(process.env.MONGOOSE_URI, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    }),
     PlayerModule,
   ],
   controllers: [],
