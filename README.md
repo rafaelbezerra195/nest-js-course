@@ -71,3 +71,5 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+# nest-js-course
+Software created during the course "Microservices em Node.js: NestJS, TypeScript, RabbitMQ, etc".
