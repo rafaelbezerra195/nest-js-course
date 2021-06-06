@@ -9,16 +9,16 @@ export class PlayerController {
 
   @Post()
   async playerPost(@Body() newPlayer: PlayerDto): Promise<void> {
-    this.playerService.createPlayer(newPlayer);
+    await this.playerService.createPlayer(newPlayer);
   }
 
   @Get()
   async playerGet(@Query('email') email: string): Promise<Player[]> {
-    return this.playerService.getPlayers(email);
+    return await this.playerService.getPlayers(email);
   }
 
   @Delete()
   async playerDelete(@Query('email') email: string): Promise<void> {
-    this.playerService.delete(email);
+    await this.playerService.delete(email);
   }
 }
