@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { PlayerDto } from './dto/create-player.dto';
 import { Player } from './interfaces/player.interface';
 import { PlayerService } from './player.service';
@@ -8,6 +17,7 @@ export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   async playerPost(@Body() newPlayer: PlayerDto): Promise<void> {
     await this.playerService.createPlayer(newPlayer);
   }
