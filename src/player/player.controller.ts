@@ -15,14 +15,14 @@ import { Player } from './interfaces/player.interface';
 import { PlayerParamValitadionPipe } from './pipes/player-param-validation.pipe';
 import { PlayerService } from './player.service';
 
-@Controller('player')
+@Controller('api/v1/player')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Post()
   @UsePipes(ValidationPipe)
   async playerPost(@Body() newPlayer: CreatePlayerDto): Promise<Player> {
-    return await this.playerService.createPlayer(newPlayer);
+    return this.playerService.createPlayer(newPlayer);
   }
 
   @Put('/:_id')
@@ -38,12 +38,12 @@ export class PlayerController {
   async playerGet(
     @Param('_id', PlayerParamValitadionPipe) _id: string,
   ): Promise<Player> {
-    return await this.playerService.getPlayer(_id);
+    return this.playerService.getPlayer(_id);
   }
 
   @Get()
   async playerGetAll(): Promise<Player[]> {
-    return await this.playerService.getPlayers();
+    return this.playerService.getPlayers();
   }
 
   @Delete('/:_id')

@@ -31,9 +31,7 @@ export class PlayerService {
     _id: string,
     player: UpdatePlayerDto,
   ): Promise<Player> {
-    return await this.playerModel
-      .findOneAndUpdate({ _id }, { $set: player })
-      .exec();
+    return this.playerModel.findOneAndUpdate({ _id }, { $set: player }).exec();
   }
 
   public async getPlayer(_id: string): Promise<Player> {
@@ -44,10 +42,10 @@ export class PlayerService {
   }
 
   public async getPlayers(): Promise<Player[]> {
-    return await this.playerModel.find().exec();
+    return this.playerModel.find().exec();
   }
 
   public async delete(_id: string): Promise<any> {
-    await this.playerModel.deleteOne({ _id });
+    this.playerModel.deleteOne({ _id });
   }
 }
