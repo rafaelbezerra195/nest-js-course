@@ -33,10 +33,10 @@ export class CategoryService {
     return this.categoryModel.find().exec();
   }
 
-  async selectCategory(_id: string): Promise<Category> {
-    const category = await this.categoryModel.findOne({ _id }).exec();
-    if (_.isNil(category)) throw new NotFoundException('Category not found.');
+  async selectCategory(category: string): Promise<Category> {
+    const cat = await this.categoryModel.findOne({ category }).exec();
+    if (_.isNil(cat)) throw new NotFoundException('Category not found.');
 
-    return category;
+    return cat;
   }
 }

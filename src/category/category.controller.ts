@@ -28,8 +28,10 @@ export class CategoryController {
     return this.categoryService.selectCategories();
   }
 
-  @Get('/:_id')
-  async selectCategoryById(@Param('_id') _id: string): Promise<Category> {
-    return this.categoryService.selectCategory(_id);
+  @Get('/:categoria')
+  async selectCategoryById(
+    @Param('categoria') categoria: string,
+  ): Promise<Category> {
+    return this.categoryService.selectCategory(categoria);
   }
 }
